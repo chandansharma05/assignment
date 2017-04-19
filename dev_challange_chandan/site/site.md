@@ -5,28 +5,38 @@ This module contains a development challenge for Sort Table and Sparkline.
 ### Node modules
 Chai and Mocha node modules installed for testing
 
+test directory have all test files - fliter_model_object.js
 ### Command to run test
     npm test
 
-#### Tech
 
-Make directory static/js which consists of js files for this assignment below are the file names.
+##### Modularize each function should reside in separate folder below are :
 
-- ##### app.js
-  In app.js the this.client.subscribe method have callback which return updated object after every 1 secound.
+- ##### main.js
+  In main.js the this.client.subscribe method have callback which return updated object after every 1 secound and Instantiate views and controllers
 
-- ##### config.js
-  In config.js we have all require import file and exports for other file to use.
+  ## Model
+  - ##### model.js
+  In Model set the data updated object and filter them accordingly with observer methos.
 
-- ##### model.js
-  In Model get the data updated object and filter them accordingly.
+  ## Views
+  - ##### table_view.js
+  In this view it display the sorted table.
 
-- ##### view.js
-  - In view js it display the sorted table nad sparkline animation.
+  - ##### sparkline_view.js
+  In this view it display sparklines for each row in table.
 
-- ##### sortable.js
-  In sortable.js sortObject and sparkArray methos return sorted objects and sparkArray to drawSpark.
+  ## Controllers
+  - ##### table_controller.js
+  In table controller will update table view whenever object change and notify method call respective method.
 
-- ##### iobserver.js , isubject.js , observer_list.js
+  - ##### sparkline_controller.js
+    - In sparline controller will update sparline view whenever object change and notify method call respective method.
+    - The sparkline object of array will reset after 30 sec.
 
-  All three files used observer pattern and provides nofiy when object change the state.
+  ## public/js
+  - ##### filter_model_object.js
+  In this filterObject method accept three param updated object from Stomp, dataObject, sparkLineObject which will return filtered and sorted dataObject and sparkLineObject.
+
+  - ##### sorted_object.js
+  It will sort object based on cell value lastChangeBid.

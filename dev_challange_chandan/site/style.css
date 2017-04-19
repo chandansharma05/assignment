@@ -26,6 +26,7 @@ h3 {
 .table_container{
   overflow: hidden;
   overflow-x: auto;
+  border: 1px solid #cfcfcf;
 }
 
 table {
@@ -43,4 +44,20 @@ td, th {
 #sparkline{
   padding: 5px;
   margin: 5px 20px 0px 0px;
+  border: 1px solid #cfcfcf;
+}
+
+.sparklines{
+  padding: 5px 5px 5px 0px;
+  font-weight: bold;
+}
+
+.sLines{
+  margin-left: 10px;
+}
+
+.sText {
+  padding: 20px 0px 0px 0px;
+  font-weight: bold;
+  font-size: 18px;
 }

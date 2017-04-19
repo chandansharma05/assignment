@@ -5,13 +5,15 @@
  */
 
 // This is not really required, but means that changes to index.html will cause a reload.
-require('./site/index.html')
+require('./site/index.html');
 // Apply the styles in style.css to the page.
-require('./site/style.css')
+require('./site/style.css');
 
-const { App } = require('./site/static/js/app.js');
+// Main js
+const { main } = require('./site/main.js');
 
 // Change this to get detailed logging from the stomp library
+
 global.DEBUG = false
 
 const url = "ws://localhost:8011/stomp"
@@ -23,8 +25,8 @@ client.debug = function(msg) {
 }
 
 function connectCallback() {
-  var app = new App(client);
-  app.init();
+  // initialize function call
+  main.initialize(client);
 }
 
 client.connect({}, connectCallback, function(error) {
