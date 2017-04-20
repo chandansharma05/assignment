@@ -28,10 +28,10 @@ for (let ccy in startPrices) {
     name: ccy,
     bestBid: mid - mid * (spread / 2),
     bestAsk: mid + mid * (spread / 2),
-    lastChangeAsk: 0,
-    lastChangeBid: 0,
     openBid: mid - mid * (spread / 2),
-    openAsk: mid + mid * (spread / 2)
+    openAsk: mid + mid * (spread / 2),
+    lastChangeAsk: 0,
+    lastChangeBid: 0
   }
 }
 
@@ -54,7 +54,7 @@ exports.start = function(stompUrl) {
           data.bestBid = bid
           data.bestAsk = ask
 
-          client.send("/fx/prices", {priority: 9}, JSON.stringify(data))
+          client.send("/fx/prices", {priority: 9}, JSON.stringify(data));
         }
       }, 1000)
   }, function() {

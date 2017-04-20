@@ -6,6 +6,7 @@
  * @param
  */
 const { filterObject } = require('../public/js/filter_model_object.js');
+const { rowInterval } = require('../public/js/row_interval.js');
 
 class Model {
   constructor(){
@@ -14,6 +15,7 @@ class Model {
       items:[]
     };
     this.sparkLineObj = {};
+    this.sIntervals = {};
     this.listeners = [];
   }
   /**
@@ -24,9 +26,9 @@ class Model {
     const fObject = filterObject(jData, this.dataObj, this.sparkLineObj);
     this.dataObj = fObject.dataObj;
     this.sparkLineObj = fObject.sLObject;
+    this.sIntervals = rowInterval(this.sparkLineObj, this.sIntervals);
     this.notifyAllObservers();
   }
-
   // Notifies all observers
   notifyAllObservers(){
     let i;

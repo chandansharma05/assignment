@@ -5,7 +5,9 @@ This module contains a development challenge for Sort Table and Sparkline.
 ### Node modules
 Chai and Mocha node modules installed for testing
 
-test directory have all test files - fliter_model_object.js
+Test directory have test files below:
+  - fliter_model_object.js
+  - row_interval.js
 ### Command to run test
     npm test
 
@@ -17,26 +19,24 @@ test directory have all test files - fliter_model_object.js
 
   ## Model
   - ##### model.js
-  In Model set the data updated object and filter them accordingly with observer methos.
+  In Model set the data updated object.filter them accordingly with observer methos.
 
   ## Views
   - ##### table_view.js
-  In this view it display the sorted table.
-
-  - ##### sparkline_view.js
-  In this view it display sparklines for each row in table.
+   - In this view it display the sorted table with last row as sparkline and value for each row except sparkline will display till 8 decimal point.
+   
+   - sparlines will display for each row if each row  sparline is empty it will not show any sparkline and if only one value in array it will show dot.
 
   ## Controllers
   - ##### table_controller.js
   In table controller will update table view whenever object change and notify method call respective method.
 
-  - ##### sparkline_controller.js
-    - In sparline controller will update sparline view whenever object change and notify method call respective method.
-    - The sparkline object of array will reset after 30 sec.
-
   ## public/js
   - ##### filter_model_object.js
   In this filterObject method accept three param updated object from Stomp, dataObject, sparkLineObject which will return filtered and sorted dataObject and sparkLineObject.
+
+  - ##### row_interval.js
+  It will return each intervals objects.
 
   - ##### sorted_object.js
   It will sort object based on cell value lastChangeBid.
