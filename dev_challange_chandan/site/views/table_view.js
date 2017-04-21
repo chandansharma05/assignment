@@ -5,50 +5,97 @@
  * @this {TableView}
  * @param model - instanceof model
  */
+ const { SparklineGenerator } = require('../public/js/sparkline_generator.js');
 
 class TableView {
-  constructor(model){
+  constructor(model) {
     this.model = model;
-    this.tBody = document.querySelector("#table_body");
+    this.tBody = document.getElementById("table_body");
+    this.sElement = [];
   }
   /**
  * Creates a renderTable for View
  */
  renderTable() {
-   let tableRow = '';
-   const sLObject = this.model.sparkLineObj;
-   const items = this.model.dataObj.items;
-   const byId = this.model.dataObj.byId;
-
-   // Creates rows of table
-   for(var i = 0;i<items.length;i++) {
-     tableRow += "<tr>";
-     for(var j = 0;j<Object.values(byId[Object.keys(byId)[i]]).length;j++) {
+   const jData = this.model.dataObj;
+   const element = document.getElementById(jData.name);
+   if(element) {
+     const tElement = document.getElementById(jData.name);
+     for(var j = 0;j<Object.keys(jData).length;j++) {
        if(j == 0) {
-         tableRow += "<td>"+Object.values(byId[Object.keys(byId)[i]])[j]+"</td>";
+         tElement.children[j].innerHTML = Object.values(jData)[j];
        } else {
-         tableRow += "<td>"+(Object.values(byId[Object.keys(byId)[i]])[j]).toFixed(8)+"</td>";
+         tElement.children[j].innerHTML = Object.values(jData)[j].toFixed(8);
        }
      }
-     tableRow += "<td><span class='sLines' id="+Object.values(byId[Object.keys(byId)[i]])[0]+"></span></td>";
-     tableRow += "</tr>";
+   } else {
+      let tableRow = '';
+      tableRow += "<tr id='"+jData.name+"'>";
+      for(var j = 0;j<Object.keys(jData).length;j++) {
+        if(j == 0) {
+          tableRow += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j]+"</td>";
+        } else {
+          tableRow += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j].toFixed(8)+"</td>";
+        }
+      }
+      tableRow += "<td id='spark_"+jData.name+"'></td>";
+      tableRow += "</tr>";
+      this.tBody.innerHTML += tableRow;
    }
 
-   this.tBody.innerHTML = tableRow;
+  //  if(document.getElementById("spark_gbpusd") && document.getElementById("spark_gbpeur")) {
+  //    const sparkline1 = new Sparkline(document.getElementById("spark_gbpusd"));
+  //    const sparkline2 = new Sparkline(document.getElementById("spark_gbpeur"));
+   //
+  //    sparkline1.draw([1,2]);
+  //    sparkline2.draw([1,2]);
+  //  }
+   this.sort(true);
 
-   // Draw the sparkline for each table row
-   for(var i = 0;i<Object.keys(sLObject).length;i++) {
-     Sparkline.draw(document.querySelector("#"+Object.keys(sLObject)[i]), sLObject[Object.keys(sLObject)[i]]);
-
-     /**
-    * Rest sparkline each table row after 30 secounds.
-    */
-     if(this.model.sIntervals[Object.keys(sLObject)[i]] === 30) {
-       this.model.sIntervals[Object.keys(sLObject)[i]] = 0;
-       this.model.sparkLineObj[Object.keys(this.model.sparkLineObj)[i]] = [];
-     }
-   }
+  //  const sElement = document.getElementById('spark_'+jData.name);
+   //
+  //  if((this.sElement.indexOf(jData.name)) == -1) {
+  //    this.sElement.push(jData.name);
+  //    this.model.sGenerator.push(new SparklineGenerator(sElement, this.model));
+  //  }
+  //  console.log(this.model.sGenerator);
+  //  for(var i = 0; i< this.model.sGenerator.length; i++) {
+  //    console.log(this.model.sGenerator[i].persistArray.length);
+  //    this.model.sGenerator[i].sparkline.draw(this.model.sGenerator[i].persistArray);
+  //  }
  }
+
+ sort(ascending) {
+		var tbody = this.tBody;
+		var rows = tbody.getElementsByTagName("tr");
+		var unsorted = true;
+		while(unsorted)
+		{
+			unsorted = false
+			for (var r = 0; r < rows.length - 1; r++)
+			{
+				var row = rows[r];
+				var nextRow = rows[r+1];
+				var value = row.children[6].innerHTML;
+				var nextValue = nextRow.children[6].innerHTML;
+
+				value = value.replace(',', ''); // in case a comma is used in float number
+				nextValue = nextValue.replace(',', '');
+
+				if(!isNaN(value))
+				{
+					value = parseFloat(value);
+					nextValue = parseFloat(nextValue);
+				}
+
+				if (ascending ? value > nextValue : value < nextValue)
+				{
+					tbody.insertBefore(nextRow, row);
+					unsorted = true;
+				}
+			}
+    }
+  }
 }
 
 exports.TableView = TableView;

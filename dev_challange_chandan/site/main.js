@@ -8,6 +8,8 @@
 const { model } = require('./model/model.js');
 const { TableView } = require('./views/table_view.js');
 const { TableController } = require('./controllers/table_controller.js');
+const { SparklineController } = require('./controllers/sparkline_controller.js');
+const { Sparklines } = require('./views/sparklines.js');
 
 class Main {
   /**
@@ -22,7 +24,9 @@ class Main {
     });
 
     const tableView = new TableView(model); // Instantiate TableView
+    const sparkline = new Sparklines(); // Instantiate TableView
     const tableController = new TableController(model, tableView); // Instantiate TableController
+    // const sparklineController = new SparklineController(model, sparkline); // Instantiate sparklineCcontroller
   }
 }
 

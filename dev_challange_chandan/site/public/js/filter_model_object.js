@@ -6,22 +6,22 @@
 
 const { sortedObject } = require('./sorted_object.js');
 
-function filterObject(jObject, dataObj, sLObject) {
+function filterObject(jObject, dataObj) {
   const name =  jObject.name;
   const inArray = dataObj.items.indexOf(name);
 
   if (inArray !== -1) {
     dataObj.byId[name] = jObject;
-    sLObject[name].push((jObject.bestBid + jObject.bestAsk) / 2)
+    // sLObject[name].push((jObject.bestBid + jObject.bestAsk) / 2)
   } else {
     dataObj.items.push(name);
     dataObj.byId = Object.assign({}, dataObj.byId, {
       [name]: jObject
     });
 
-    sLObject = Object.assign({}, sLObject, {
-      [name]: [(jObject.bestBid + jObject.bestAsk) / 2]
-    });
+    // sLObject = Object.assign({}, sLObject, {
+    //   [name]: [(jObject.bestBid + jObject.bestAsk) / 2]
+    // });
   }
 
   const sortObj = sortedObject(dataObj.byId);
@@ -29,7 +29,7 @@ function filterObject(jObject, dataObj, sLObject) {
   dataObj.byId = sortObj;
   dataObj.items = Object.keys(sortObj);
 
-  return { dataObj: dataObj, sLObject: sLObject };
+  return dataObj;
 }
 
 exports.filterObject = filterObject;
