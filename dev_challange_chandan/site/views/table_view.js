@@ -5,13 +5,12 @@
  * @this {TableView}
  * @param model - instanceof model
  */
- const { SparklineGenerator } = require('../public/js/sparkline_generator.js');
+// const { SparklineGenerator } = require('../public/js/sparkline_generator.js');
 
 class TableView {
   constructor(model) {
     this.model = model;
     this.tBody = document.getElementById("table_body");
-    this.sElement = [];
   }
   /**
  * Creates a renderTable for View
@@ -38,10 +37,11 @@ class TableView {
           tableRow += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j].toFixed(8)+"</td>";
         }
       }
-      tableRow += "<td id='spark_"+jData.name+"'></td>";
+      tableRow += "<td><span id='spark_"+jData.name+"'></span></td>";
       tableRow += "</tr>";
       this.tBody.innerHTML += tableRow;
    }
+
 
   //  if(document.getElementById("spark_gbpusd") && document.getElementById("spark_gbpeur")) {
   //    const sparkline1 = new Sparkline(document.getElementById("spark_gbpusd"));
@@ -51,6 +51,11 @@ class TableView {
   //    sparkline2.draw([1,2]);
   //  }
    this.sort(true);
+
+  //  for(var i = 0;i<this.model.sGenerator.length;i++) {
+  //    console.log(this.model.sGenerator[i].sparkline);
+  //    Sparkline.draw(this.model.sGenerator[i].domElementId,[1]);
+  //  }
 
   //  const sElement = document.getElementById('spark_'+jData.name);
    //

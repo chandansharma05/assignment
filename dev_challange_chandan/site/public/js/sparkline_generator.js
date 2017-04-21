@@ -10,7 +10,7 @@ class SparklineGenerator {
   constructor(domElementId, model) {
     this.model = model;
     this.domElementId = domElementId;
-    this.persistArray = [];
+    this.persistArray = [1];
     this.sparkline = null;
     this.model.addObserver(this);
     this.generate();
@@ -70,6 +70,9 @@ class SparklineGenerator {
         this.setIntervals();
       }
     }
+
+    // console.log(this.model);
+
   };
 }
 
