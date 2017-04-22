@@ -18,13 +18,13 @@ class SparklineGenerator {
 
   generate() {
     if(this.sparkline == null) {
-      this.sparkline = new Sparkline(this.domElementId);
+      this.sparkline = new Sparkline(this.domElementId); // create instance of sparkline
     }
     this.drawSparkline();
   }
 
   drawSparkline(){
-    this.sparkline.draw(this.persistArray);
+    this.sparkline.draw(this.persistArray); // draw sparkline with persistArray
   }
 
   // set Interval
@@ -43,7 +43,6 @@ class SparklineGenerator {
   }
 
   // Clear Interval
-
   clearIntervals(){
     clearInterval(this.interval);
   }

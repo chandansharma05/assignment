@@ -5,7 +5,7 @@
  * @this {TableView}
  * @param model - instanceof model
  */
-const { SparklineGenerator } = require('./sparkline_generator.js');
+const { SparklineGenerator } = require('../public/js/sparkline_generator.js');
 
 class TableView {
   constructor(model) {
@@ -41,6 +41,7 @@ class TableView {
      }
      row.innerHTML += "<td><span class='sparkline' id='spark_"+jData.name+"'></span></td>";
 
+     // create a instance of SparklineGenerator
      const sparkline = new SparklineGenerator(row.querySelector("span.sparkline"), this.model);
      this.model.sGenerator.push(sparkline);
      document.getElementById("table_body").appendChild(row);
@@ -48,7 +49,7 @@ class TableView {
 
   this.sort(true);
  }
-
+// sorting table row
  sort(ascending) {
 		var tbody = this.tBody;
 		var rows = tbody.getElementsByTagName("tr");
