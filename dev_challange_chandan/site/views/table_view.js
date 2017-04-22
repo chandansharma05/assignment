@@ -5,7 +5,7 @@
  * @this {TableView}
  * @param model - instanceof model
  */
-// const { SparklineGenerator } = require('../public/js/sparkline_generator.js');
+const { SparklineGenerator } = require('./sparkline_generator.js');
 
 class TableView {
   constructor(model) {
@@ -27,47 +27,26 @@ class TableView {
          tElement.children[j].innerHTML = Object.values(jData)[j].toFixed(8);
        }
      }
+    //  console.log(this.model.sGenerator);
+
    } else {
-      let tableRow = '';
-      tableRow += "<tr id='"+jData.name+"'>";
-      for(var j = 0;j<Object.keys(jData).length;j++) {
-        if(j == 0) {
-          tableRow += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j]+"</td>";
-        } else {
-          tableRow += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j].toFixed(8)+"</td>";
-        }
-      }
-      tableRow += "<td><span id='spark_"+jData.name+"'></span></td>";
-      tableRow += "</tr>";
-      this.tBody.innerHTML += tableRow;
+     var row = document.createElement("tr");
+     row.setAttribute('id', jData.name);
+     for(var j = 0;j<Object.keys(jData).length;j++) {
+       if(j == 0) {
+         row.innerHTML += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j]+"</td>";
+       } else {
+         row.innerHTML += "<td id='"+Object.keys(jData)[j]+"'>"+Object.values(jData)[j].toFixed(8)+"</td>";
+       }
+     }
+     row.innerHTML += "<td><span class='sparkline' id='spark_"+jData.name+"'></span></td>";
+
+     const sparkline = new SparklineGenerator(row.querySelector("span.sparkline"), this.model);
+     this.model.sGenerator.push(sparkline);
+     document.getElementById("table_body").appendChild(row);
    }
 
-
-  //  if(document.getElementById("spark_gbpusd") && document.getElementById("spark_gbpeur")) {
-  //    const sparkline1 = new Sparkline(document.getElementById("spark_gbpusd"));
-  //    const sparkline2 = new Sparkline(document.getElementById("spark_gbpeur"));
-   //
-  //    sparkline1.draw([1,2]);
-  //    sparkline2.draw([1,2]);
-  //  }
-   this.sort(true);
-
-  //  for(var i = 0;i<this.model.sGenerator.length;i++) {
-  //    console.log(this.model.sGenerator[i].sparkline);
-  //    Sparkline.draw(this.model.sGenerator[i].domElementId,[1]);
-  //  }
-
-  //  const sElement = document.getElementById('spark_'+jData.name);
-   //
-  //  if((this.sElement.indexOf(jData.name)) == -1) {
-  //    this.sElement.push(jData.name);
-  //    this.model.sGenerator.push(new SparklineGenerator(sElement, this.model));
-  //  }
-  //  console.log(this.model.sGenerator);
-  //  for(var i = 0; i< this.model.sGenerator.length; i++) {
-  //    console.log(this.model.sGenerator[i].persistArray.length);
-  //    this.model.sGenerator[i].sparkline.draw(this.model.sGenerator[i].persistArray);
-  //  }
+  this.sort(true);
  }
 
  sort(ascending) {

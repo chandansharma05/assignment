@@ -1,16 +1,16 @@
 /**
- * Controller .
+ * SparklineGenerator .
  *
  * @constructor
- * @this {Controller}
- * @param model - instanceof model, view - instanceof table view
+ * @this {SparklineGenerator}
+ * @param model - instanceof model
  */
 
 class SparklineGenerator {
   constructor(domElementId, model) {
     this.model = model;
     this.domElementId = domElementId;
-    this.persistArray = [1];
+    this.persistArray = [];
     this.sparkline = null;
     this.model.addObserver(this);
     this.generate();
@@ -27,6 +27,7 @@ class SparklineGenerator {
     this.sparkline.draw(this.persistArray);
   }
 
+  // set Interval
   setIntervals(){
     const self = this;
     let intervalCounts = 0;
@@ -41,25 +42,15 @@ class SparklineGenerator {
     }, 1000);
   }
 
+  // Clear Interval
+
   clearIntervals(){
     clearInterval(this.interval);
   }
 
   restartOnEvery30Sec(){
-    console.log("Before restartOnEvery30Sec", this.persistArray.length);
     this.persistArray = [];
     this.generate();
-    console.log("After restartOnEvery30Sec", this.persistArray.length);
-    // console.log("restartOnEvery30Sec");
-    // this.persistArray = [];
-    // if(this.persistArray.length > 0) {
-    //   this.setIntervals();
-    //   this.generate();
-    // }
-     //30 second interval logic
-     // clearInterval
-     //setInterval
-    //generate
   };
 
   // When notifies by the modal send the request of update
@@ -70,9 +61,7 @@ class SparklineGenerator {
         this.setIntervals();
       }
     }
-
-    // console.log(this.model);
-
+    this.drawSparkline();
   };
 }
 
